@@ -1,9 +1,7 @@
-module Gloomhaven
-	class MonstersController < ApplicationController
+class MonstersController < ApplicationController
 
-	  def index
-	  	@scenario = Scenario.first
-	  end
+  def index
+  	@scenario = Scenario.first
+  end
 
-	end
 end

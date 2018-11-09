@@ -1,8 +1,6 @@
-module Gloomhaven
-	class BattlesController < ApplicationController
+class BattlesController < ApplicationController
 
-	  def index
-	  end
+  def index
+  end
 
-	end
 end
