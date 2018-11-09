@@ -1,11 +1,2 @@
-Monsters!! </br>
-Scenario: <%= @scenario.number %> | <%= @scenario.name %> </br>
-Monsters: 
-<% @scenario.monsters.each{ |monster| %>
-	Name: <%= monster.name %> |
-	Level: <%= monster.monster_stat.first.level %>
-	Health: <%= monster.monster_stat.first.health %>
-	Attack: <%= monster.monster_stat.first.attack %>
-	Range: <%= monster.monster_stat.first.range || "-" %>
-<% } %>
-<%= javascript_pack_tag 'gloomhaven_monster_app' %>
+<div id="monsters_index"></div>
+<%= javascript_pack_tag 'monsters_app' %>
