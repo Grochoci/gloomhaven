@@ -4,6 +4,16 @@
       <p> Name: {{monster.name}} </p>
       <p> Boss: {{monster.is_boss}} </p>
       <p> Portrait: <img v-bind:src="monster.portrait" style='height:100px;' /> </p>
+      <p> Stats:
+        <div v-for="stats in monster.monster_stats">
+          <p> Level: {{stats.level}} </p>
+          <p> Is Elite: {{stats.is_elite}} </p>
+          <p> Health: {{stats.health}} </p>
+          <p> Attack: {{stats.attack}} </p>
+          <p> Movement: {{stats.movement}} </p>
+          <p> Range: {{stats.range}} </p>
+        </div>
+      </p>
       <p> Ability Deck: <img v-bind:src="monster.ability_deck.back_image" style='height:100px;' /> </p>
     </div>
   </div>
@@ -39,6 +49,15 @@ export default {
           name,
           portrait,
           is_boss,
+          monster_stats {
+            id,
+            level,
+            is_elite,
+            health,
+            attack,
+            movement,
+            range,
+          },
           ability_deck {
             id,
             name,
