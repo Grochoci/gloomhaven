@@ -3,5 +3,5 @@ class Monster < ActiveRecord::Base
 	has_many :abilities, through: :ability_deck
 	has_many :scenario_monsters
 	has_many :scenarios, through: :scenario_monsters
-	has_many :monster_stat
+	has_many :monster_stats
 end
