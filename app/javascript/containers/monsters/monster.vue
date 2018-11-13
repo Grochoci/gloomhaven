@@ -19,8 +19,22 @@
             <p> Movement: {{ stats.movement }} </p>
             <p> Range: {{ stats.range || '-' }} </p>
         </div>
-      </p>
-      <img v-bind:src="monster.ability_deck.back_image" class='ability-deck-back' />
+      </div>
+      <div class="monster-deck">
+        <img v-bind:src="monster.ability_deck.back_image"
+             class='ability-deck-back'
+             @click="toggleAbilities"/>
+        <div v-show="showAbilities">
+          <b-row v-for="rowNumber in rowCount" :key="rowNumber">
+            <b-col v-for="ability in abilities.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)" :key="ability.id">
+              <b-img v-if="ability.ability_image"
+                :src="ability.ability_image"
+                fluid
+                thumbnail/>
+            </b-col>
+          </b-row>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -30,22 +44,44 @@ import graphqlAjaxCaller from '../../helpers/graphql-ajax-caller';
 export default {
   data() {
     return {
+      showMonsterStats: true,
+      itemsPerRow: 5,
+      showAbilities: true,
     };
   },
   props: {
     monster: Object,
+    abilities: Array,
+  },
+  computed: {
+    showMonsterStatsButton() {
+      const text = !this.showMonsterStats ? "Show Stats" : "Hide Stats";
+      const variant = !this.showMonsterStats ? "primary" : "danger";
+
+      return {
+        variant: variant,
+        text: text,
+      }
+    },
+    rowCount() {
+      return Math.ceil(this.abilities.length / this.itemsPerRow);
+    },
   },
   methods: {
+    toggleAbilities() {
+      this.showAbilities = !this.showAbilities;
+    },
   },
 };
 </script>
 
 <style scoped>
   .monster-portrait {
-    height:200px;
+    height:400px;
   }
   .ability-deck-back {
-    height: 100px;
+    cursor: pointer;
+    height: 200px;
   }
   .normal-stats {
     background-color: lightgrey;
