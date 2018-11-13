@@ -3,12 +3,13 @@
     <div class="monster-content">
       <div v-show="!showMonsterList">
         <monster v-if="selectedMonster"
-                 :monster='selectedMonster'>
+                 :monster='selectedMonster'
+                 :abilities="abilities">
         </monster>
       </div>
       <div v-show="showMonsterList">
-        <b-card-group v-for="rowNumber in rowCount">
-          <b-card v-for="monster in monsterList.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)"
+        <b-card-group v-for="rowNumber in rowCount" :key="rowNumber">
+          <b-card v-for="monster in monsterList.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)" :key="monster.id"
                   :title="monster.name"
                   :img-src="monster.portrait"
                   img-fluid
@@ -45,6 +46,49 @@ export default {
       selectedMonster: null,
       showMonsterList: false,
       itemsPerRow: 5,
+      // TODO: Remove once abilities have been added
+      abilities: [
+        {
+          id: 1,
+          reshuffle: false,
+          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
+        },
+        {
+          id: 2,
+          reshuffle: false,
+          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
+        },
+        {
+          id: 3,
+          reshuffle: false,
+          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
+        },
+        {
+          id: 4,
+          reshuffle: false,
+          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
+        },
+        {
+          id: 5,
+          reshuffle: false,
+          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
+        },
+        {
+          id: 6,
+          reshuffle: false,
+          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
+        },
+        {
+          id: 7,
+          reshuffle: false,
+          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
+        },
+        {
+          id: 8,
+          reshuffle: false,
+          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
+        },
+      ],
 
     };
   },
@@ -65,6 +109,7 @@ export default {
   },
   mounted() {
     this.getMonsterList();
+    this.fixMonsterAbilityCount(); // Move to the fetch when that is done
   },
   methods: {
     getMonsterList() {
@@ -130,6 +175,15 @@ export default {
     selectMonster(monster) {
       this.selectedMonster = monster;
       this.showMonsterList = false;
+    },
+    fixMonsterAbilityCount() {
+      // Make Empty objects to fill a row when displaying
+      const emptyAbilityCount = 5 - this.abilities.length % 5;
+      for(let i=0; i < emptyAbilityCount; i++){
+        this.abilities = this.abilities.concat([
+          { reshuffle: false, ability_image: "" }
+        ])
+      }
     },
   },
 };
