@@ -2,8 +2,13 @@
     <div>
       <img v-bind:src="monster.portrait" class='monster-portrait' />
       <p class='monster-name'> {{monster.name}} </p>
-      <p>
-        <div v-for="stats in monster.monster_stats"
+      <div class="monster-stats">
+        <b-button :pressed.sync="showMonsterStats"
+                  :variant="showMonsterStatsButton.variant"
+                  class="monster-stat-button">
+          {{ showMonsterStatsButton.text }}
+        </b-button>
+        <div v-if="showMonsterStats" v-for="stats in monster.monster_stats" :key="monster.id"
           :class="{
             'normal-stats': !stats.is_elite,
             'elite-stats': stats.is_elite,
