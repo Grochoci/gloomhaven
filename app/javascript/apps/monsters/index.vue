@@ -136,23 +136,22 @@ export default {
 </script>
 
 <style scoped>
-  #monsters-index-vue {
+  .monster-index {
     text-align: center;
   }
   .monster-content {
-    padding-bottom:40px;   /* Height of the footer */
-  }
-  .monster-list {
+    padding-bottom: 40px;
   }
   .monster-footer {
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:40px;   /* Height of the footer */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
   }
   .monster-show-button {
     width: 100%;
-    height:40px;
+    height: 40px;
   }
   .monster-card {
     cursor: pointer;
