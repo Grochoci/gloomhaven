@@ -75,6 +75,8 @@ export default {
         // TODO: Remove once lots of monsters are added
         self.monsterList = self.monsterList.concat(self.monsterList);
         self.monsterList = self.monsterList.concat(self.monsterList);
+        self.monsterList = self.monsterList.concat(self.monsterList);
+        self.monsterList = self.monsterList.concat(self.monsterList);
         // TODO: Remove once selection is possible
         self.selectedMonster = self.monsterList[0];
 
