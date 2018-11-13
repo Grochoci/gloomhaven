@@ -1,22 +1,24 @@
 <template>
-  <section id="monsters-index-vue">
-    <div v-show="!showMonsterList" class="monster-content">
-      <monster v-if="selectedMonster"
-               :monster='selectedMonster'>
-      </monster>
-    </div>
-    <div v-show="showMonsterList" class="monster-list">
-      <b-card-group v-for="rowNumber in rowCount">
-        <b-card v-for="monster in monsterList.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)"
-                :title="monster.name"
-                :img-src="monster.portrait"
-                img-fluid
-                :img-alt="monster.name"
-                img-top
-                @click="selectMonster(monster)"
-                class="monster-card">
-        </b-card>
-      </b-card-group>
+  <section id="monsters-index-vue" class="monster-index">
+    <div class="monster-content">
+      <div v-show="!showMonsterList">
+        <monster v-if="selectedMonster"
+                 :monster='selectedMonster'>
+        </monster>
+      </div>
+      <div v-show="showMonsterList">
+        <b-card-group v-for="rowNumber in rowCount">
+          <b-card v-for="monster in monsterList.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)"
+                  :title="monster.name"
+                  :img-src="monster.portrait"
+                  img-fluid
+                  :img-alt="monster.name"
+                  img-top
+                  @click="selectMonster(monster)"
+                  class="monster-card">
+          </b-card>
+        </b-card-group>
+      </div>
     </div>
     <div class="monster-footer">
       <b-button :pressed.sync="showMonsterList"
