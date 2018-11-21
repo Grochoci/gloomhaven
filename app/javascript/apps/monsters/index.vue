@@ -53,6 +53,14 @@ export default {
   mounted() {
     this.getMonsterList();
   },
+  watch: {
+    showMonsterList() {
+      // Scrolls to the top of the page whenever monster list is hidden or shown.
+      // Makes sure that list is always shown from the top and when a monster is
+      // chosen, it will show the image at the top instead of halfway down in stats.
+      this.$el.scrollIntoView();
+    },
+  },
   methods: {
     getMonsterList() {
       const self = this;
