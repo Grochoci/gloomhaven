@@ -137,17 +137,20 @@ export default {
   .monster-card {
     opacity: 0.8;
     padding: 2px;
+    box-shadow: 0 0 0 2px transparent;
     transition: all 0.2s;
   }
   .monster-card:hover {
     cursor: pointer;
     opacity: 1;
-    background-color: black;
-    color: white;
+    box-shadow: 0 0 0 2px rgb(195, 147, 111);
+    background-color: rgb(195, 147, 111);
   }
   .grid {
     display: grid;
     grid-gap: 0em;
     grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+    background-color: black;
+    color: white;
   }
 </style>
