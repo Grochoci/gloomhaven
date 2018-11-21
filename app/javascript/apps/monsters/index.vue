@@ -6,18 +6,11 @@
                  :monster='selectedMonster'>
         </monster>
       </div>
-      <div v-show="showMonsterList">
-        <b-card-group v-for="rowNumber in rowCount" :key="rowNumber">
-          <b-card v-for="monster in monsterList.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)" :key="'monster-' + monster.id"
-                  :title="monster.name"
-                  :img-src="monster.portrait"
-                  img-fluid
-                  :img-alt="monster.name"
-                  img-top
-                  @click="selectMonster(monster)"
-                  class="monster-card">
-          </b-card>
-        </b-card-group>
+      <div v-show="showMonsterList" class="grid">
+        <div v-for="monster in monsterList" :key="'monster-' + monster.id" @click="selectMonster(monster)" class="monster-card">
+          <img :src="monster.portrait" class="monster-image"/>
+          <span> {{ monster.name }} </span>
+        </div>
       </div>
     </div>
     <div class="monster-footer">
@@ -160,7 +153,24 @@ export default {
     width: 100%;
     height: 40px;
   }
+  .monster-image {
+    height: auto;
+    width: 100%;
+  }
   .monster-card {
+    opacity: 0.8;
+    padding: 2px;
+    transition: all 0.2s;
+  }
+  .monster-card:hover {
     cursor: pointer;
+    opacity: 1;
+    background-color: black;
+    color: white;
+  }
+  .grid {
+    display: grid;
+    grid-gap: 0em;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
   }
 </style>
