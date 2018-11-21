@@ -4,5 +4,6 @@ Types::AbilityType = GraphQL::ObjectType.define do
   field :id, !types.ID
   field :reshuffle, !types.Boolean
   field :ability_image, !types.String
+  field :initiative, !types.Int
 
 end
