@@ -37,7 +37,6 @@ export default {
       monsterList: [],
       selectedMonster: null,
       showMonsterList: false,
-      itemsPerRow: 5,
     };
   },
   computed: {
@@ -50,10 +49,6 @@ export default {
         text: text,
       }
     },
-
-    rowCount() {
-      return Math.ceil(this.monsterList.length / this.itemsPerRow);
-    },
   },
   mounted() {
     this.getMonsterList();
@@ -64,14 +59,6 @@ export default {
 
       const successCallback = (res) => {
         self.monsterList = res.data.allMonsters;
-
-        // Make Empty objects to fill a row when displaying
-        const emptyMonsterCount = this.itemsPerRow - self.monsterList.length % this.itemsPerRow;
-        for(let i=0; i < emptyMonsterCount; i++){
-          self.monsterList = self.monsterList.concat([
-            {id: null, name: "", portrait: "", is_boss: false}
-          ])
-        }
       };
 
       const errorCallback = (res) => {
@@ -119,18 +106,8 @@ export default {
     },
     selectMonster(monster) {
       this.selectedMonster = monster;
-      this.fixMonsterAbilityCount(); // Move to the fetch when that is done
       this.showMonsterList = false;
-    },
-    fixMonsterAbilityCount() {
-      // Make Empty objects to fill a row when displaying
-      const emptyAbilityCount = this.itemsPerRow - this.selectedMonster.abilities.length % this.itemsPerRow;
-      for(let i=0; i < emptyAbilityCount; i++){
-        this.selectedMonster.abilities = this.selectedMonster.abilities.concat([
-          { id: i * -1, reshuffle: false, ability_image: "" }
-        ])
-      }
-    },
+    }
   },
 };
 </script>
