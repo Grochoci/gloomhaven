@@ -21,18 +21,13 @@
         </div>
       </div>
       <div class="monster-deck">
-        <img v-bind:src="monster.ability_deck.back_image"
+        <img :src="monster.ability_deck.back_image"
              class='ability-deck-back'
              @click="toggleAbilities"/>
-        <div v-show="showAbilities">
-          <b-row v-for="rowNumber in rowCount" :key="rowNumber">
-            <b-col v-for="ability in monster.abilities.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)" :key="'ability-' + ability.id">
-              <b-img v-if="ability.ability_image"
+        <div v-show="showAbilities" class="grid">
+          <img v-for="ability in monster.abilities" :key="'ability-' + ability.id"
                 :src="ability.ability_image"
-                fluid
-                thumbnail/>
-            </b-col>
-          </b-row>
+                class="ability-card"/>
         </div>
       </div>
     </div>
@@ -45,7 +40,6 @@ export default {
   data() {
     return {
       showMonsterStats: true,
-      itemsPerRow: 5,
       showAbilities: true,
     };
   },
@@ -61,9 +55,6 @@ export default {
         variant: variant,
         text: text,
       }
-    },
-    rowCount() {
-      return Math.ceil(this.monster.abilities.length / this.itemsPerRow);
     },
   },
   methods: {
@@ -91,5 +82,14 @@ export default {
   .monster-name {
     font-size: 20px;
     font-weight: 800;
+  }
+  .grid {
+    display: grid;
+    grid-gap: 0.7em;
+    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
+  }
+  .ability-card {
+    height: auto;
+    width: 100%;
   }
 </style>
