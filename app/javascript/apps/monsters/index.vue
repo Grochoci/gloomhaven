@@ -3,13 +3,12 @@
     <div class="monster-content">
       <div v-show="!showMonsterList">
         <monster v-if="selectedMonster"
-                 :monster='selectedMonster'
-                 :abilities="abilities">
+                 :monster='selectedMonster'>
         </monster>
       </div>
       <div v-show="showMonsterList">
         <b-card-group v-for="rowNumber in rowCount" :key="rowNumber">
-          <b-card v-for="monster in monsterList.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)" :key="monster.id"
+          <b-card v-for="monster in monsterList.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)" :key="'monster-' + monster.id"
                   :title="monster.name"
                   :img-src="monster.portrait"
                   img-fluid
@@ -46,50 +45,6 @@ export default {
       selectedMonster: null,
       showMonsterList: false,
       itemsPerRow: 5,
-      // TODO: Remove once abilities have been added
-      abilities: [
-        {
-          id: 1,
-          reshuffle: false,
-          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
-        },
-        {
-          id: 2,
-          reshuffle: false,
-          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
-        },
-        {
-          id: 3,
-          reshuffle: false,
-          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
-        },
-        {
-          id: 4,
-          reshuffle: false,
-          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
-        },
-        {
-          id: 5,
-          reshuffle: false,
-          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
-        },
-        {
-          id: 6,
-          reshuffle: false,
-          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
-        },
-        {
-          id: 7,
-          reshuffle: false,
-          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
-        },
-        {
-          id: 8,
-          reshuffle: false,
-          ability_image: "https://f001.backblazeb2.com/file/gloomhaven/ability-decks/guard/back.png"
-        },
-      ],
-
     };
   },
   computed: {
@@ -109,7 +64,6 @@ export default {
   },
   mounted() {
     this.getMonsterList();
-    this.fixMonsterAbilityCount(); // Move to the fetch when that is done
   },
   methods: {
     getMonsterList() {
@@ -117,16 +71,9 @@ export default {
 
       const successCallback = (res) => {
         self.monsterList = res.data.allMonsters;
-        // TODO: Remove once lots of monsters are added
-        self.monsterList = self.monsterList.concat(self.monsterList);
-        self.monsterList = self.monsterList.concat(self.monsterList);
-        self.monsterList = self.monsterList.concat(self.monsterList);
-        self.monsterList = self.monsterList.concat(self.monsterList);
-        // TODO: Remove once selection is possible
-        self.selectedMonster = self.monsterList[0];
 
         // Make Empty objects to fill a row when displaying
-        const emptyMonsterCount = 5 - self.monsterList.length % 5;
+        const emptyMonsterCount = this.itemsPerRow - self.monsterList.length % this.itemsPerRow;
         for(let i=0; i < emptyMonsterCount; i++){
           self.monsterList = self.monsterList.concat([
             {id: null, name: "", portrait: "", is_boss: false}
@@ -167,6 +114,11 @@ export default {
             name,
             back_image,
           }
+          abilities {
+            id,
+            reshuffle,
+            ability_image,
+          }
         }
       }`;
 
@@ -174,14 +126,15 @@ export default {
     },
     selectMonster(monster) {
       this.selectedMonster = monster;
+      this.fixMonsterAbilityCount(); // Move to the fetch when that is done
       this.showMonsterList = false;
     },
     fixMonsterAbilityCount() {
       // Make Empty objects to fill a row when displaying
-      const emptyAbilityCount = 5 - this.abilities.length % 5;
+      const emptyAbilityCount = this.itemsPerRow - this.selectedMonster.abilities.length % this.itemsPerRow;
       for(let i=0; i < emptyAbilityCount; i++){
-        this.abilities = this.abilities.concat([
-          { reshuffle: false, ability_image: "" }
+        this.selectedMonster.abilities = this.selectedMonster.abilities.concat([
+          { id: i * -1, reshuffle: false, ability_image: "" }
         ])
       }
     },

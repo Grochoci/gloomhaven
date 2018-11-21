@@ -8,7 +8,7 @@
                   class="monster-stat-button">
           {{ showMonsterStatsButton.text }}
         </b-button>
-        <div v-if="showMonsterStats" v-for="stats in monster.monster_stats" :key="monster.id"
+        <div v-if="showMonsterStats" v-for="stats in monster.monster_stats" :key="'stats-' + stats.id"
           :class="{
             'normal-stats': !stats.is_elite,
             'elite-stats': stats.is_elite,
@@ -26,7 +26,7 @@
              @click="toggleAbilities"/>
         <div v-show="showAbilities">
           <b-row v-for="rowNumber in rowCount" :key="rowNumber">
-            <b-col v-for="ability in abilities.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)" :key="ability.id">
+            <b-col v-for="ability in monster.abilities.slice((rowNumber - 1) * itemsPerRow, rowNumber * itemsPerRow)" :key="'ability-' + ability.id">
               <b-img v-if="ability.ability_image"
                 :src="ability.ability_image"
                 fluid
@@ -51,7 +51,6 @@ export default {
   },
   props: {
     monster: Object,
-    abilities: Array,
   },
   computed: {
     showMonsterStatsButton() {
@@ -64,7 +63,7 @@ export default {
       }
     },
     rowCount() {
-      return Math.ceil(this.abilities.length / this.itemsPerRow);
+      return Math.ceil(this.monster.abilities.length / this.itemsPerRow);
     },
   },
   methods: {
