@@ -20,14 +20,18 @@
         </div>
       </div>
       <div class="monster-deck">
-        <img :src="monster.ability_deck.back_image"
-             class='ability-deck-back'
-             @click="toggleAbilities"/>
-        <div v-show="showAbilities" class="grid">
+        <transition-group name="ability-card" tag="div" class="grid">
+          <img :src="monster.ability_deck.back_image"
+               class='ability-deck-back ability-card'
+               @click="toggleAbilities"
+               key='back-ability'/>
           <img v-for="ability in monster.abilities" :key="'ability-' + ability.id"
                 :src="ability.ability_image"
-                class="ability-card"/>
-        </div>
+                :class="[
+                  'ability-card',
+                  showAbilities ? '' : 'ability-card-decked'
+                ]"/>
+        </transition-group>
       </div>
     </div>
 </template>
@@ -70,7 +74,11 @@ export default {
   }
   .ability-deck-back {
     cursor: pointer;
-    height: 200px;
+    z-index: 50;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    max-width: 400px;
+    justify-self: center;
   }
   .normal-stats {
     background-color: lightgrey;
@@ -90,5 +98,13 @@ export default {
   .ability-card {
     height: auto;
     width: 100%;
+    transition: all 1s;
+  }
+  .ability-card-decked {
+    z-index: 1;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    max-width: 400px;
+    justify-self: center;
   }
 </style>
