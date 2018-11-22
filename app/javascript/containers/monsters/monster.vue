@@ -9,10 +9,9 @@
           {{ showMonsterStatsButton.text }}
         </b-button>
         <div v-if="showMonsterStats" v-for="stats in monster.monster_stats" :key="'stats-' + stats.id"
-          :class="{
-            'normal-stats': !stats.is_elite,
-            'elite-stats': stats.is_elite,
-          }">
+          :class="[
+            stats.is_elite ? 'elite-stats' : 'normal-stats'
+          ]">
             <p> Level: {{ stats.level }} </p>
             <p> Health: {{ stats.health }} </p>
             <p> Attack: {{ stats.attack }} </p>

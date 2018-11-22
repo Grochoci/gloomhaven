@@ -65,6 +65,7 @@ export default {
 
       const successCallback = (res) => {
         self.monsterList = res.data.allMonsters;
+        self.selectedMonster = self.monsterList[0];
       };
 
       const errorCallback = (res) => {
@@ -127,6 +128,7 @@ export default {
     padding-bottom: 40px;
   }
   .monster-footer {
+    z-index: 100;
     position: fixed;
     bottom: 0;
     left: 0;
